@@ -62,7 +62,7 @@ You can add this repo to your pacman.conf
     SigLevel = Optional TrustAll
     Server = https://repo.blacksky3.com/$arch/$repo
 
-    sudo pacman -S llvm10-minimal llvm10-libs-minimal libclc10-minimal lib32-llvm10-minimal lib32-llvm10-libs-minimal
+    sudo pacman -S llvm10-minimal clang10-minimal llvm10-libs-minimal clang10-libs-minimal libclc10-minimal
 
 # Donation
 
