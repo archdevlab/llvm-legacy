@@ -219,7 +219,7 @@ package_clang10-minimal(){
   _python_optimize "$pkgdir/opt/llvm10/share" "$pkgdir/$site_packages"
 
   # (taken from llvm-git aur)
-  #optimize other python files except 2 problem cases
+  # optimize other python files except 2 problem cases
   _python_optimize "$pkgdir"/opt/llvm10/share -x 'clang-include-fixer|run-find-all-symbols'
 
   install -Dm644 "$srcdir/llvm-project-llvmorg-${pkgver}/clang/LICENSE.TXT" "$pkgdir/usr/share/licenses/$pkgname/clang/LICENSE"
