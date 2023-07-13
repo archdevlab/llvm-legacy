@@ -162,11 +162,11 @@ package_llvm10-minimal(){
   mv -f "$pkgdir"/opt/llvm10/lib/lib{LLVM,LTO,Remarks}*.so* "$srcdir"
   mv -f "$pkgdir"/opt/llvm10/lib/LLVMgold.so "$srcdir"
 
-  # The clang runtime libraries go into clang-libs-minimal-git
+  # The clang runtime libraries go into clang-libs-minimal
   # https://bugs.archlinux.org/task/72588?project=1&string=clang
   mv -f "$pkgdir"/opt/llvm10/lib/libclang{,-cpp}.so* "$srcdir"
 
-  # clang-minimal-git files go to a separate package
+  # clang-minimal files go to a separate package
   mkdir -p "$srcdir"/clang/opt/llvm10/{bin,include,lib,lib/cmake,share}
   #mv -f "$pkgdir"/opt/llvm10/lib/{libear,libscanbuild,libclang*.a,clang} "$srcdir"/clang/opt/llvm10/lib
   mv -f "$pkgdir"/opt/llvm10/lib/{libclang*.a,clang} "$srcdir"/clang/opt/llvm10/lib
