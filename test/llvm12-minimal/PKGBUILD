@@ -191,13 +191,13 @@ package_llvm12-minimal(){
 
   # clang files go to a separate package
   mkdir -p "$srcdir"/clang/opt/llvm12/{bin,include,lib,lib/cmake,share}
-  mv -f "$pkgdir"/opt/llvm12/lib/{libear,libscanbuild,libclang*.a,clang} "$srcdir"/clang/opt/llvm12/lib
-  #mv -f "$pkgdir"/opt/llvm12/lib/{libclang*.a,clang} "$srcdir"/clang/opt/llvm12/lib
+  #mv -f "$pkgdir"/opt/llvm12/lib/{libear,libscanbuild,libclang*.a,clang} "$srcdir"/clang/opt/llvm12/lib
+  mv -f "$pkgdir"/opt/llvm12/lib/{libclang*.a,clang} "$srcdir"/clang/opt/llvm12/lib
   mv -f "$pkgdir"/opt/llvm12/lib/cmake/clang "$srcdir"/clang/opt/llvm12/lib/cmake/
   mv -f "$pkgdir"/opt/llvm12/include/{clang,clang-tidy,clang-c} "$srcdir"/clang/opt/llvm12/include/
   mv -f "$pkgdir"/opt/llvm12/libexec "$srcdir"/clang/opt/llvm12/
-  mv -f "$pkgdir"/opt/llvm12/bin/{analyze-build,c-index-test,clang*,diagtool,find-all-symbols,git-clang-format,hmaptool,intercept-build,modularize,pp-trace,run-clang-tidy,scan-build,scan-build-py,scan-view} "$srcdir"/clang/opt/llvm12/bin/
-  #mv -f "$pkgdir"/opt/llvm12/bin/{c-index-test,clang*,diagtool,find-all-symbols,git-clang-format,hmaptool,modularize,pp-trace,scan-build,scan-view} "$srcdir"/clang/opt/llvm12/bin/
+  #mv -f "$pkgdir"/opt/llvm12/bin/{analyze-build,c-index-test,clang*,diagtool,find-all-symbols,git-clang-format,hmaptool,intercept-build,modularize,pp-trace,run-clang-tidy,scan-build,scan-build-py,scan-view} "$srcdir"/clang/opt/llvm12/bin/
+  mv -f "$pkgdir"/opt/llvm12/bin/{c-index-test,clang*,diagtool,find-all-symbols,git-clang-format,hmaptool,modularize,pp-trace,scan-build,scan-view} "$srcdir"/clang/opt/llvm12/bin/
   mv -f "$pkgdir"/opt/llvm12/share/{clang,man,opt-viewer,scan-build,scan-view} "$srcdir"/clang/opt/llvm12/share/
 
   # spirv-llvm-translator files go to a separate package
@@ -220,9 +220,9 @@ package_llvm12-minimal(){
     cp "$srcdir/llvm-config.h" "$pkgdir/opt/llvm12/include/llvm/Config/llvm-config.h"
   fi
 
-  install -Dm644 "$srcdir/llvm-project-llvmorg-${pkgver}/llvm/LICENSE.TXT" "$pkgdir/usr/share/licenses/$pkgname/llvm/LICENSE"
-  install -Dm644 "$srcdir/llvm-project-llvmorg-${pkgver}/llvm/CREDITS.TXT" "$pkgdir/usr/share/licenses/$pkgname/llvm/CREDITS"
-  install -Dm644 "$srcdir/llvm-project-llvmorg-${pkgver}/llvm/CODE_OWNERS.TXT" "$pkgdir/usr/share/licenses/$pkgname/llvm/CODE_OWNERS"
+  install -Dm644 "$srcdir/llvm-project-llvmorg-${pkgver}/llvm/LICENSE.TXT" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+  install -Dm644 "$srcdir/llvm-project-llvmorg-${pkgver}/llvm/CREDITS.TXT" "$pkgdir/usr/share/licenses/$pkgname/CREDITS"
+  install -Dm644 "$srcdir/llvm-project-llvmorg-${pkgver}/llvm/CODE_OWNERS.TXT" "$pkgdir/usr/share/licenses/$pkgname/CODE_OWNERS"
 }
 
 package_clang12-minimal(){
@@ -249,7 +249,7 @@ package_clang12-minimal(){
   rmdir "$pkgdir/opt/llvm12/libexec"
   sed -i 's|libexec|lib/clang|' \
     "$pkgdir/opt/llvm12/bin/scan-build"
-    "$pkgdir/$site_packages/libscanbuild/analyze.py"
+    #"$pkgdir/$site_packages/libscanbuild/analyze.py"
 
   # Compile Python scripts
   _python_optimize "$pkgdir/opt/llvm12/share" "$pkgdir/$site_packages"
@@ -313,8 +313,8 @@ package_clang12-libs-minimal(){
   ln -s /opt/llvm12/lib/libclang.so.12 "$pkgdir"/usr/lib/libclang.so.12
   ln -s /opt/llvm12/lib/libclang-cpp.so.12 "$pkgdir"/usr/lib/libclang-cpp.so.12
 
-  install -Dm644 "$srcdir/llvm-project-llvmorg-${pkgver}/clang/LICENSE.TXT" "$pkgdir/usr/share/licenses/$pkgname/clang/LICENSE"
-  install -Dm644 "$srcdir/llvm-project-llvmorg-${pkgver}/clang/CODE_OWNERS.TXT" "$pkgdir/usr/share/licenses/$pkgname/clang/CODE_OWNERS"
+  install -Dm644 "$srcdir/llvm-project-llvmorg-${pkgver}/clang/LICENSE.TXT" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+  install -Dm644 "$srcdir/llvm-project-llvmorg-${pkgver}/clang/CODE_OWNERS.TXT" "$pkgdir/usr/share/licenses/$pkgname/CODE_OWNERS"
 }
 
 package_spirv-llvm-translator12-minimal(){
@@ -324,7 +324,7 @@ package_spirv-llvm-translator12-minimal(){
 
   cp --preserve --recursive "$srcdir"/spirv/* "$pkgdir"/
 
-  install -Dm644 "${srcdir}/SPIRV-LLVM-Translator-${pkgver}/LICENSE.TXT" "$pkgdir/usr/share/licenses/$pkgname/spirv-llvm-translator/LICENSE"
+  install -Dm644 "${srcdir}/SPIRV-LLVM-Translator-${pkgver}/LICENSE.TXT" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 }
 
 sha256sums=('8e6c99e482bb16a450165176c2d881804976a2d770e0445af4375e78a1fbf19c'
