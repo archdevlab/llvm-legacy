@@ -41,6 +41,7 @@ NINJAFLAGS="-j 18 -l 18"
 # LITFLAGS="-j 18"
 # NOTE: It's your responbility to validate the value of NINJAFLAGS and LITFLAGS. If unsure, don't set it.
 
+
 # Utilizing LLVM_DISTRIBUTION_COMPONENTS to avoid
 # installing static libraries; inspired by Gentoo
 _get_distribution_components(){
@@ -162,9 +163,9 @@ package_llvm11-minimal(){
   DESTDIR="$pkgdir" ninja $NINJAFLAGS install-distribution
 
   # Include lit for running lit-based tests in other projects
-  pushd ../utils/lit
-  python3 setup.py install --root="$pkgdir"/opt/llvm11/ -O1
-  popd
+  #pushd ../utils/lit
+  #python3 setup.py install --root="$pkgdir" -O1
+  #popd
 
   # The runtime libraries go into llvm-libs
   mv -f "$pkgdir"/opt/llvm11/lib/lib{LLVM,LTO,Remarks}*.so* "$srcdir"
@@ -176,14 +177,13 @@ package_llvm11-minimal(){
 
   # clang files go to a separate package
   mkdir -p "$srcdir"/clang/opt/llvm11/{bin,include,lib,lib/cmake,share}
-  mv -f "$pkgdir"/opt/llvm11/lib/{libear,libscanbuild,libclang*.a,clang} "$srcdir"/clang/opt/llvm11/lib
-  #mv -f "$pkgdir"/opt/llvm11/lib/{libclang*.a,clang} "$srcdir"/clang/opt/llvm11/lib
+  #mv -f "$pkgdir"/opt/llvm11/lib/{libear,libscanbuild,libclang*.a,clang} "$srcdir"/clang/opt/llvm11/lib
+  mv -f "$pkgdir"/opt/llvm11/lib/{libclang*.a,clang} "$srcdir"/clang/opt/llvm11/lib
   mv -f "$pkgdir"/opt/llvm11/lib/cmake/clang "$srcdir"/clang/opt/llvm11/lib/cmake/
   mv -f "$pkgdir"/opt/llvm11/include/{clang,clang-tidy,clang-c} "$srcdir"/clang/opt/llvm11/include/
-  #mv -f "$pkgdir"/opt/llvm11/include/{clang,clang-c} "$srcdir"/clang/opt/llvm11/include/
   mv -f "$pkgdir"/opt/llvm11/libexec "$srcdir"/clang/opt/llvm11/
-  mv -f "$pkgdir"/opt/llvm11/bin/{analyze-build,c-index-test,clang*,diagtool,find-all-symbols,git-clang-format,hmaptool,intercept-build,modularize,pp-trace,run-clang-tidy,scan-build,scan-build-py,scan-view} "$srcdir"/clang/opt/llvm11/bin/
-  #mv -f "$pkgdir"/opt/llvm11/bin/{c-index-test,clang*,diagtool,find-all-symbols,git-clang-format,hmaptool,modularize,pp-trace,scan-build,scan-view} "$srcdir"/clang/opt/llvm11/bin/
+  #mv -f "$pkgdir"/opt/llvm11/bin/{analyze-build,c-index-test,clang*,diagtool,find-all-symbols,git-clang-format,hmaptool,intercept-build,modularize,pp-trace,run-clang-tidy,scan-build,scan-build-py,scan-view} "$srcdir"/clang/opt/llvm11/bin/
+  mv -f "$pkgdir"/opt/llvm11/bin/{c-index-test,clang*,diagtool,find-all-symbols,git-clang-format,hmaptool,modularize,pp-trace,scan-build,scan-view} "$srcdir"/clang/opt/llvm11/bin/
   mv -f "$pkgdir"/opt/llvm11/share/{clang,man,opt-viewer,scan-build,scan-view} "$srcdir"/clang/opt/llvm11/share/
 
   # spirv-llvm-translator files go to a separate package
@@ -195,6 +195,9 @@ package_llvm11-minimal(){
   # Remove pkgconfig dir from llvm11-minimal
   rm -rf "$pkgdir"/opt/llvm11/lib/pkgconfig/
   rm -rf "$pkgdir"/opt/llvm11/include/LLVMSPIRVLib/
+
+  # Remove /opt/llvm11/share empty directory
+  rm -rf "$pkgdir"/opt/llvm11/share
 
   if [[ $CARCH == x86_64 ]]; then
     # Needed for multilib (https://bugs.archlinux.org/task/29951)
@@ -224,7 +227,7 @@ package_clang11-minimal(){
   _py=$([[ "$(python -V)" =~ Python[[:space:]]*([0-9]+.[0-9]+) ]] && echo ${BASH_REMATCH[1]})
   local site_packages="/opt/llvm11/lib/python$_py/site-packages"
   install -d "$pkgdir/$site_packages"
-  mv "$pkgdir"/opt/llvm11/lib/{libear,libscanbuild} "$pkgdir/$site_packages/"
+  #mv "$pkgdir"/opt/llvm11/lib/{libear,libscanbuild} "$pkgdir/$site_packages/"
   cp -a ${srcdir}/llvm-project-llvmorg-${pkgver}/clang/bindings/python/clang "$pkgdir/$site_packages/"
 
   # Move analyzer scripts out of /usr/libexec
@@ -232,7 +235,7 @@ package_clang11-minimal(){
   rmdir "$pkgdir/opt/llvm11/libexec"
   sed -i 's|libexec|lib/clang|' \
     "$pkgdir/opt/llvm11/bin/scan-build"
-    "$pkgdir/$site_packages/libscanbuild/analyze.py"
+    #"$pkgdir/$site_packages/libscanbuild/analyze.py"
 
   # Compile Python scripts
   _python_optimize "$pkgdir/opt/llvm11/share" "$pkgdir/$site_packages"
