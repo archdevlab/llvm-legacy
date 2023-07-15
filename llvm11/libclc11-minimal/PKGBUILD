@@ -51,6 +51,7 @@ package(){
 
   install -Dm644 ${srcdir}/llvm-project-llvmorg-${pkgver}/libclc/LICENSE.TXT "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
   install -Dm644 ${srcdir}/llvm-project-llvmorg-${pkgver}/libclc/CREDITS.TXT "$pkgdir/usr/share/licenses/$pkgname/CREDITS"
+  install -Dm644 ${srcdir}/llvm-project-llvmorg-${pkgver}/libclc/CODE_OWNERS.TXT "$pkgdir/usr/share/licenses/$pkgname/CODE_OWNERS"
 }
 
 sha256sums=('8ad4ddbafac4f2c8f2ea523c2c4196f940e8e16f9e635210537582a48622a5d5')
