@@ -13,7 +13,7 @@
 pkgbase=llvm10-minimal
 pkgname=(llvm10-minimal clang10-minimal llvm10-libs-minimal clang10-libs-minimal)
 url='https://llvm.org/'
-pkgver=10.0.0
+pkgver=10.0.1
 pkgrel=1
 _pkgver=10.0.0
 arch=(x86_64)
