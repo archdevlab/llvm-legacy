@@ -13,9 +13,10 @@
 pkgbase=llvm12-minimal
 pkgname=(llvm12-minimal clang12-minimal llvm12-libs-minimal clang12-libs-minimal spirv-llvm-translator12-minimal)
 url='https://llvm.org/'
-pkgver=12.0.0
+pkgver=12.0.1
 pkgrel=1
 _pkgver=12.0.0
+spirvllvmver=12.0.0
 arch=(x86_64)
 license=('custom:Apache 2.0 with LLVM Exception')
 makedepends=(cmake ninja zlib zstd libffi libedit ncurses
@@ -23,16 +24,12 @@ makedepends=(cmake ninja zlib zstd libffi libedit ncurses
              python-recommonmark gcc12 gcc12-fortran gcc12-libs)
 options=(staticlibs !lto) # Getting thousands of test failures with LTO
 source=(https://github.com/llvm/llvm-project/archive/refs/tags/llvmorg-${pkgver}.tar.gz
-        https://github.com/KhronosGroup/SPIRV-LLVM-Translator/archive/refs/tags/v${pkgver}.tar.gz
+        https://github.com/KhronosGroup/SPIRV-LLVM-Translator/archive/refs/tags/v${spirvllvmver}.tar.gz
         llvm-config.h
-        force-visibility-of-llvm-Any-to-external.patch
         llvm-link-with-Bsymbolic-functions.patch
         add-fno-semantic-interposition.patch
         x86-twist-shuffle-mask.patch
         no-strict-aliasing-DwarfCompileUnit.patch
-        partially-revert-scan-view-remove-Reporter.py.patch
-        opencl-respect-calling-convention-for-builtin.patch
-        clangd-CompletionModel-cmake.patch
         clang-link-with-Bsymbolic-functions.patch
         enable-SSP-and-PIE-by-default.patch)
 
@@ -69,8 +66,6 @@ _get_distribution_components(){
 
 prepare(){
   cd ${srcdir}/llvm-project-llvmorg-${pkgver}/llvm
-  # https://bugs.llvm.org/show_bug.cgi?id=48992
-  patch -Np2 -i ${srcdir}/force-visibility-of-llvm-Any-to-external.patch
   # https://bugs.archlinux.org/task/70697
   patch -Np2 -i ${srcdir}/llvm-link-with-Bsymbolic-functions.patch
   # https://reviews.llvm.org/D102453
@@ -83,15 +78,8 @@ prepare(){
 
   cd ${srcdir}/llvm-project-llvmorg-${pkgver}/clang
   patch -Np2 -i ${srcdir}/enable-SSP-and-PIE-by-default.patch
-  # Some fixes from the release/12.x branch
-  patch -Np2 -i ${srcdir}/partially-revert-scan-view-remove-Reporter.py.patch
-  patch -Np2 -i ${srcdir}/opencl-respect-calling-convention-for-builtin.patch
   # https://bugs.archlinux.org/task/70697
   patch -Np2 -i ${srcdir}/clang-link-with-Bsymbolic-functions.patch
-
-  cd ${srcdir}/llvm-project-llvmorg-${pkgver}/clang-tools-extra
-  # https://bugs.llvm.org/show_bug.cgi?id=49990
-  patch -Np2 -i ${srcdir}/clangd-CompletionModel-cmake.patch
 
   # Attempt to convert script to Python 3
   2to3 -wn --no-diffs \
@@ -142,7 +130,7 @@ export CXXFLAGS+=" ${CPPFLAGS}"
     -DCOMPILER_RT_INSTALL_PATH=/opt/llvm12/lib/clang/$_pkgver
     -DLLVM_ENABLE_DUMP=ON
     -DLLVM_EXTERNAL_PROJECTS="SPIRV-LLVM-Translator"
-    -DLLVM_EXTERNAL_SPIRV_LLVM_TRANSLATOR_SOURCE_DIR="$srcdir"/SPIRV-LLVM-Translator-${pkgver}
+    -DLLVM_EXTERNAL_SPIRV_LLVM_TRANSLATOR_SOURCE_DIR="$srcdir"/SPIRV-LLVM-Translator-${spirvllvmver}
     #-DLLVM_EXTERNAL_SPIRV_HEADERS_SOURCE_DIR=/usr/include/spirv/
     -DLLVM_SPIRV_INCLUDE_TESTS=OFF
     -DLLVM_LIT_ARGS="$LITFLAGS"" -sv --ignore-fail"
@@ -324,20 +312,16 @@ package_spirv-llvm-translator12-minimal(){
 
   cp --preserve --recursive "$srcdir"/spirv/* "$pkgdir"/
 
-  install -Dm644 "${srcdir}/SPIRV-LLVM-Translator-${pkgver}/LICENSE.TXT" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+  install -Dm644 "${srcdir}/SPIRV-LLVM-Translator-${spirvllvmver}/LICENSE.TXT" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 }
 
-sha256sums=('8e6c99e482bb16a450165176c2d881804976a2d770e0445af4375e78a1fbf19c'
+sha256sums=('66b64aa301244975a4aea489f402f205cde2f53dd722dad9e7b77a0459b4c8df'
             '6e4fad04203f25fcde4c308c53e9f59bd05a390978992db3212d4b63aff62108'
             '597dc5968c695bbdbb0eac9e8eb5117fcd2773bc91edf5ec103ecffffab8bc48'
-            '98721af5a36af2a8e88c14a81b16d3929b12515d7d2d1ba385eb243dca3c32cb'
             '560ce1e206c19f4b86f4c583b743db0ad47a610418999350710aafd60ae50fcd'
             'fc8c64267a5d179e9fc24fb2bc6150edef2598c83f5b2d138d14e05ce9f4e345'
             'c51b8754f76eb3774f46d530409f6d89f5bb47d90f0d718dbfa861f716b29693'
             'd1eff24508e35aae6c26a943dbaa3ef5acb60a145b008fd1ef9ac6f6c4faa662'
-            '68be2fb78e62f76702a156d4c1759b4c6f0d805e1b492e9c6f490ce40862138d'
-            '859d34dac43999edfc4c33e1cbb6e7458921fa9f16a93514701c1a9706665d24'
-            '6739abedc8870879618414c5358fda4fcfd4a3ac7a22030ac7c409779b68f669'
             '5bc0b47c70990bb8dd0cf4138a8ab9e15cf6b008b7c0cf2c7aac3736b559e0e6'
             'a877fa5cf1c1cca3bd55f9a36cf8c1bdd061ff398aeace90fe3cbd9e82550da3')
 
