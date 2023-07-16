@@ -15,7 +15,6 @@ pkgname=(llvm10-minimal clang10-minimal llvm10-libs-minimal clang10-libs-minimal
 url='https://llvm.org/'
 pkgver=10.0.1
 pkgrel=1
-_pkgver=10.0.0
 arch=(x86_64)
 license=('custom:Apache 2.0 with LLVM Exception')
 makedepends=(cmake ninja zlib zstd libffi libedit ncurses
@@ -115,7 +114,7 @@ export CXXFLAGS+=" ${CPPFLAGS}"
     -DLLVM_ENABLE_DOXYGEN=OFF
     -DLLVM_ENABLE_BINDINGS=OFF
     -DLLVM_ENABLE_PROJECTS="compiler-rt;clang-tools-extra;clang"
-    -DCOMPILER_RT_INSTALL_PATH=/opt/llvm10/lib/clang/$_pkgver
+    -DCOMPILER_RT_INSTALL_PATH=/opt/llvm10/lib/clang/$pkgver
     -DLLVM_ENABLE_DUMP=ON
     -DLLVM_LIT_ARGS="$LITFLAGS"" -sv --ignore-fail"
     -Wno-dev
