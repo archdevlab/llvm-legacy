@@ -206,7 +206,7 @@ package_llvm13-minimal(){
   mv "$pkgdir"/opt/llvm13/include/spirv/* "$srcdir"/spirv/opt/llvm13/include/spirv/
   mv "$pkgdir"/opt/llvm13/lib/libLLVMSPIRVLib.a "$srcdir"/spirv/opt/llvm13/lib
   mv "$pkgdir"/opt/llvm13/lib/pkgconfig/LLVMSPIRVLib.pc "$srcdir"/spirv/opt/llvm13/lib/pkgconfig
-  # Remove empty dir from spirv-llvm-translator
+  # Remove empty dir
   rm -rf "$pkgdir"/opt/llvm13/lib/pkgconfig/
   rm -rf "$pkgdir"/opt/llvm13/include/LLVMSPIRVLib/
   rm -rf "$pkgdir"/opt/llvm13/include/spirv/
