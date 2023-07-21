@@ -14,3 +14,4 @@
 - [x] libclang.so.13
 - [ ] libclang-cpp.so
 - [x] libclang-cpp.so.13
+- [x] libclang.so.13.0.1
