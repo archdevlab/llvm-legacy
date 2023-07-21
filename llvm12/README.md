@@ -1,6 +1,6 @@
 # TODO
 
-### Add symlink to /opt/llvm11/lib
+### Add symlink to /opt/llvm12/lib
 
 - [ ] LLVMgold.so
 - [ ] libLLVM.so
