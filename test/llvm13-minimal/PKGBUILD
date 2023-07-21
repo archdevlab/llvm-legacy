@@ -195,19 +195,21 @@ package_llvm13-minimal(){
   mv -f "$pkgdir"/opt/llvm13/lib/cmake/clang "$srcdir"/clang/opt/llvm13/lib/cmake/
   mv -f "$pkgdir"/opt/llvm13/include/{clang,clang-tidy,clang-c} "$srcdir"/clang/opt/llvm13/include/
   mv -f "$pkgdir"/opt/llvm13/libexec "$srcdir"/clang/opt/llvm13/
-  mv -f "$pkgdir"/opt/llvm13/bin/{amdgpu-arch,analyze-build,c-index-test,clang*,diagtool,find-all-symbols,git-clang-format,hmaptool,intercept-build,modularize,pp-trace,run-clang-tidy,scan-build,scan-build-py,scan-view} "$srcdir"/clang/opt/llvm13/bin/
+  mv -f "$pkgdir"/opt/llvm13/bin/{analyze-build,c-index-test,clang*,diagtool,find-all-symbols,git-clang-format,hmaptool,intercept-build,modularize,pp-trace,run-clang-tidy,scan-build,scan-build-py,scan-view} "$srcdir"/clang/opt/llvm13/bin/
   #mv -f "$pkgdir"/opt/llvm13/bin/{c-index-test,clang*,diagtool,find-all-symbols,git-clang-format,hmaptool,modularize,pp-trace,scan-build,scan-view} "$srcdir"/clang/opt/llvm13/bin/
   mv -f "$pkgdir"/opt/llvm13/share/{clang,man,opt-viewer,scan-build,scan-view} "$srcdir"/clang/opt/llvm13/share/
 
   # spirv-llvm-translator files go to a separate package
-  mkdir -p "$srcdir"/spirv/opt/llvm13/{bin,include/LLVMSPIRVLib/,lib/pkgconfig}
+  mkdir -p "$srcdir"/spirv/opt/llvm13/{bin,include/LLVMSPIRVLib/,include/spirv/,lib/pkgconfig}
   mv "$pkgdir"/opt/llvm13/bin/llvm-spirv "$srcdir"/spirv/opt/llvm13/bin
   mv "$pkgdir"/opt/llvm13/include/LLVMSPIRVLib/* "$srcdir"/spirv/opt/llvm13/include/LLVMSPIRVLib/
+  mv "$pkgdir"/opt/llvm13/include/spirv/* "$srcdir"/spirv/opt/llvm13/include/spirv/
   mv "$pkgdir"/opt/llvm13/lib/libLLVMSPIRVLib.a "$srcdir"/spirv/opt/llvm13/lib
   mv "$pkgdir"/opt/llvm13/lib/pkgconfig/LLVMSPIRVLib.pc "$srcdir"/spirv/opt/llvm13/lib/pkgconfig
-  # Remove pkgconfig dir from llvm13-minimal
+  # Remove empty dir from spirv-llvm-translator
   rm -rf "$pkgdir"/opt/llvm13/lib/pkgconfig/
   rm -rf "$pkgdir"/opt/llvm13/include/LLVMSPIRVLib/
+  rm -rf "$pkgdir"/opt/llvm13/include/spirv/
 
   # Remove /opt/llvm13/share empty directory
   rm -rf "$pkgdir"/opt/llvm13/share
@@ -311,6 +313,7 @@ package_clang13-libs-minimal(){
   install -d "$pkgdir/usr/lib"
   ln -s /opt/llvm13/lib/libclang.so.13 "$pkgdir"/usr/lib/libclang.so.13
   ln -s /opt/llvm13/lib/libclang-cpp.so.13 "$pkgdir"/usr/lib/libclang-cpp.so.13
+  ln -s /opt/llvm13/lib/libclang.so.13.0.1 "$pkgdir"/usr/lib/libclang.so.13.0.1
 
   install -Dm644 "$srcdir/llvm-project-llvmorg-${pkgver}/clang/LICENSE.TXT" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
   install -Dm644 "$srcdir/llvm-project-llvmorg-${pkgver}/clang/CODE_OWNERS.TXT" "$pkgdir/usr/share/licenses/$pkgname/CODE_OWNERS"
