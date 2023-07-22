@@ -208,7 +208,7 @@ package_llvm13-minimal(){
   # Remove empty dir
   rm -rf "${pkgdir}"/opt/llvm13/lib/pkgconfig
   rm -rf "${pkgdir}"/opt/llvm13/include/LLVMSPIRVLib
-  
+
   # Move spirv headers files in spirv-llvm-translator
   mkdir -p "${srcdir}"/spirv/opt/llvm13/{include/spirv,share}
   mv "${pkgdir}"/opt/llvm13/include/spirv/* "${srcdir}"/spirv/opt/llvm13/include/spirv/
@@ -326,6 +326,8 @@ package_spirv-llvm-translator13-minimal(){
   cp --preserve --recursive "${srcdir}"/spirv/* "${pkgdir}"/
 
   install -Dm644 "${srcdir}"/SPIRV-LLVM-Translator-"${spirvllvmver}"/LICENSE.TXT "${pkgdir}"/usr/share/licenses/"${pkgname}"/LICENSE
+  install -Dm644 "${srcdir}"/llvm-project-llvmorg-"${pkgver}"/llvm/build/tools/SPIRV-LLVM-Translator/SPIRV-Headers/LICENSE \
+    "${pkgdir}"/usr/share/licenses/"${pkgname}"/spirv-headers/LICENSE
 }
 
 sha256sums=('09c50d558bd975c41157364421820228df66632802a4a6a7c9c17f86a7340802'
@@ -340,5 +342,7 @@ sha256sums=('09c50d558bd975c41157364421820228df66632802a4a6a7c9c17f86a7340802'
             '578b960121c42b8db80566dcb51558409d04455b618cdd608e41b35ded36c13e'
             '3f4a2784a4c2b2df13e03beb0b66d5805c520f2b9f16ff76e0557daeb284c8fa'
             '67706047fc93a2e79185d344bdac48219ce042c55ddb9b9397bc98db2153ba58')
+
+# vim:set ts=8 sts=2 sw=2 et:
 
 # vim:set ts=8 sts=2 sw=2 et:
