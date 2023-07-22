@@ -276,7 +276,7 @@ package_llvm13-libs-minimal(){
   depends=(gcc12-libs zlib zstd libffi libedit ncurses libxml2)
   provides=(llvm13-libs)
 
-  cp --preserve --recursive "${srcdir}"/llvm-libs/* "${pkgdir}"
+  cp --preserve --recursive "${srcdir}"/llvm-libs/* "${pkgdir}"/
 
   # Symlink LLVMgold.so from /usr/lib/bfd-plugins
   # https://bugs.archlinux.org/task/28479
@@ -303,7 +303,7 @@ package_clang13-libs-minimal(){
   # TODO: Once repo clang-libs comes into existence, verify if changes are needed to this package
   provides=(clang13-libs)
 
-  cp --preserve --recursive "${srcdir}"/clang-libs/* "${pkgdir}"
+  cp --preserve --recursive "${srcdir}"/clang-libs/* "${pkgdir}"/
 
   # link to /opt/llvm13/lib
   install -d "${pkgdir}"/usr/lib
@@ -321,7 +321,7 @@ package_spirv-llvm-translator13-minimal(){
   provides=(spirv-llvm-translator13)
   # Also provide SPIRV-Headers 1.5.1 in /opt/llvm13/include/spirv and /opt/llvm13/share/cmake
 
-  cp --preserve --recursive "${srcdir}"/spirv/* "${pkgdir}"
+  cp --preserve --recursive "${srcdir}"/spirv/* "${pkgdir}"/
 
   install -Dm644 "${srcdir}"/SPIRV-LLVM-Translator-"${spirvllvmver}"/LICENSE.TXT "${pkgdir}"/usr/share/licenses/"${pkgname}"/LICENSE
 }
