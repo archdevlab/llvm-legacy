@@ -257,13 +257,13 @@ package_clang13-minimal(){
   # optimize other python files except 2 problem cases
   _python_optimize "${pkgdir}"/opt/llvm13/share -x 'clang-include-fixer|run-find-all-symbols'
 
-  install -Dm644 "$srcdir/llvm-project-llvmorg-${pkgver}/clang/LICENSE.TXT" "$pkgdir/usr/share/licenses/$pkgname/clang/LICENSE"
-  install -Dm644 "$srcdir/llvm-project-llvmorg-${pkgver}/clang/CODE_OWNERS.TXT" "$pkgdir/usr/share/licenses/$pkgname/clang/CODE_OWNERS"
-  install -Dm644 "$srcdir/llvm-project-llvmorg-${pkgver}/clang-tools-extra/LICENSE.TXT" "$pkgdir/usr/share/licenses/$pkgname/clang-tools-extra/LICENSE"
-  install -Dm644 "$srcdir/llvm-project-llvmorg-${pkgver}/clang-tools-extra/CODE_OWNERS.TXT" "$pkgdir/usr/share/licenses/$pkgname/clang-tools-extra/CODE_OWNERS"
-  install -Dm644 "${srcdir}/llvm-project-llvmorg-${pkgver}/compiler-rt/LICENSE.TXT" "$pkgdir/usr/share/licenses/$pkgname/compiler-rt/LICENSE"
-  install -Dm644 "${srcdir}/llvm-project-llvmorg-${pkgver}/compiler-rt/CREDITS.TXT" "$pkgdir/usr/share/licenses/$pkgname/compiler-rt/CREDITS"
-  install -Dm644 "${srcdir}/llvm-project-llvmorg-${pkgver}/compiler-rt/CODE_OWNERS.TXT" "$pkgdir/usr/share/licenses/$pkgname/compiler-rt/CODE_OWNERS"
+  install -Dm644 "{$srcdir}"/llvm-project-llvmorg-"${pkgver}"/clang/LICENSE.TXT "{$pkgdir}"/usr/share/licenses/"${pkgname}"/clang/LICENSE
+  install -Dm644 "{$srcdir}"/llvm-project-llvmorg-"${pkgver}"/clang/CODE_OWNERS.TXT "{$pkgdir}"/usr/share/licenses/"${pkgname}"/clang/CODE_OWNERS
+  install -Dm644 "{$srcdir}"/llvm-project-llvmorg-"${pkgver}"/clang-tools-extra/LICENSE.TXT "{$pkgdir}"/usr/share/licenses/"${pkgname}"/clang-tools-extra/LICENSE
+  install -Dm644 "{$srcdir}"/llvm-project-llvmorg-"${pkgver}"/clang-tools-extra/CODE_OWNERS.TXT "{$pkgdir}"/usr/share/licenses/"${pkgname}"/clang-tools-extra/CODE_OWNERS
+  install -Dm644 "{$srcdir}"/llvm-project-llvmorg-"${pkgver}"/compiler-rt/LICENSE.TXT "{$pkgdir}"/usr/share/licenses/"${pkgname}"/compiler-rt/LICENSE
+  install -Dm644 "{$srcdir}"/llvm-project-llvmorg-"${pkgver}"/compiler-rt/CREDITS.TXT "{$pkgdir}"/usr/share/licenses/"${pkgname}"/compiler-rt/CREDITS
+  install -Dm644 "{$srcdir}"/llvm-project-llvmorg-"${pkgver}"/compiler-rt/CODE_OWNERS.TXT "{$pkgdir}"/usr/share/licenses/"${pkgname}"/compiler-rt/CODE_OWNERS
 }
 
 package_llvm13-libs-minimal(){
@@ -289,9 +289,9 @@ package_llvm13-libs-minimal(){
   ln -s /opt/llvm13/lib/libLTO.so.13 "${pkgdir}"/usr/lib/libLTO.so.13
   ln -s /opt/llvm13/lib/libRemarks.so.13 "${pkgdir}"/usr/lib/libRemarks.so.13
 
-  install -Dm644 "$srcdir/llvm-project-llvmorg-${pkgver}/llvm/LICENSE.TXT" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
-  install -Dm644 "$srcdir/llvm-project-llvmorg-${pkgver}/llvm/CREDITS.TXT" "$pkgdir/usr/share/licenses/$pkgname/CREDITS"
-  install -Dm644 "$srcdir/llvm-project-llvmorg-${pkgver}/llvm/CODE_OWNERS.TXT" "$pkgdir/usr/share/licenses/$pkgname/CODE_OWNERS"
+  install -Dm644 "${srcdir}"/llvm-project-llvmorg-"${pkgver}"/llvm/LICENSE.TXT "${pkgdir}"/usr/share/licenses/"${pkgname}"/LICENSE
+  install -Dm644 "${srcdir}"/llvm-project-llvmorg-"${pkgver}"/llvm/CREDITS.TXT "${pkgdir}"/usr/share/licenses/"${pkgname}"/CREDITS
+  install -Dm644 "${srcdir}"/llvm-project-llvmorg-"${pkgver}"/llvm/CODE_OWNERS.TXT "${pkgdir}"/usr/share/licenses/"${pkgname}"/CODE_OWNERS
 }
 
 # https://bugs.archlinux.org/task/72588?project=1&string=clang
@@ -313,8 +313,8 @@ package_clang13-libs-minimal(){
   ln -s /opt/llvm13/lib/libclang-cpp.so.13 "${pkgdir}"/usr/lib/libclang-cpp.so.13
   ln -s /opt/llvm13/lib/libclang.so.13.0.1 "${pkgdir}"/usr/lib/libclang.so.13.0.1
 
-  install -Dm644 "$srcdir/llvm-project-llvmorg-${pkgver}/clang/LICENSE.TXT" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
-  install -Dm644 "$srcdir/llvm-project-llvmorg-${pkgver}/clang/CODE_OWNERS.TXT" "$pkgdir/usr/share/licenses/$pkgname/CODE_OWNERS"
+  install -Dm644 "{$srcdir}"/llvm-project-llvmorg-"${pkgver}"/clang/LICENSE.TXT "{$pkgdir}"/usr/share/licenses/"${pkgname}"/clang/LICENSE
+  install -Dm644 "{$srcdir}"/llvm-project-llvmorg-"${pkgver}"/clang/CODE_OWNERS.TXT "{$pkgdir}"/usr/share/licenses/"${pkgname}"/clang/CODE_OWNERS
 }
 
 package_spirv-llvm-translator13-minimal(){
@@ -324,7 +324,7 @@ package_spirv-llvm-translator13-minimal(){
 
   cp --preserve --recursive "${srcdir}"/spirv/* "${pkgdir}"
 
-  install -Dm644 "${srcdir}/SPIRV-LLVM-Translator-${spirvllvmver}/LICENSE.TXT" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+  install -Dm644 "{$srcdir}"/SPIRV-LLVM-Translator-"${spirvllvmver}"/LICENSE.TXT "${pkgdir}"/usr/share/licenses/"${pkgname}"/LICENSE
 }
 
 sha256sums=('09c50d558bd975c41157364421820228df66632802a4a6a7c9c17f86a7340802'
