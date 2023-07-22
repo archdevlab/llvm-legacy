@@ -203,13 +203,15 @@ package_llvm13-minimal(){
   mkdir -p "${srcdir}"/spirv/opt/llvm13/{bin,include/LLVMSPIRVLib,include/spirv,lib/pkgconfig,share}
   mv "${pkgdir}"/opt/llvm13/bin/llvm-spirv "${srcdir}"/spirv/opt/llvm13/bin/
   mv "${pkgdir}"/opt/llvm13/include/LLVMSPIRVLib/* "${srcdir}"/spirv/opt/llvm13/include/LLVMSPIRVLib/
-  mv "${pkgdir}"/opt/llvm13/include/spirv/* "${srcdir}"/spirv/opt/llvm13/include/spirv/
   mv "${pkgdir}"/opt/llvm13/lib/libLLVMSPIRVLib.a "${srcdir}"/spirv/opt/llvm13/lib/
   mv "${pkgdir}"/opt/llvm13/lib/pkgconfig/LLVMSPIRVLib.pc "${srcdir}"/spirv/opt/llvm13/lib/pkgconfig/
-  mv "${pkgdir}"/opt/llvm13/share/cmake "${srcdir}"/spirv/opt/llvm13/share/
   # Remove empty dir
   rm -rf "${pkgdir}"/opt/llvm13/lib/pkgconfig
   rm -rf "${pkgdir}"/opt/llvm13/include/LLVMSPIRVLib
+  # Move spirv headers files in spirv-llvm-translator
+  mv "${pkgdir}"/opt/llvm13/include/spirv/* "${srcdir}"/spirv/opt/llvm13/include/spirv/
+  mv "${pkgdir}"/opt/llvm13/share/cmake "${srcdir}"/spirv/opt/llvm13/share/
+  # Remove empty dir
   rm -rf "${pkgdir}"/opt/llvm13/include/spirv
 
   # Remove /opt/llvm13/share empty directory
@@ -316,7 +318,8 @@ package_clang13-libs-minimal(){
 package_spirv-llvm-translator13-minimal(){
   pkgdesc='Tool and a library for bi-directional translation between SPIR-V and LLVM IR'
   depends=(llvm13-libs-minimal)
-  provides=(spirv-llvm-translator13 spirv-headers1.5.1)
+  provides=(spirv-llvm-translator13)
+  # Also provide SPIRV-Headers 1.5.1 in /opt/llvm13/include/spirv and /opt/llvm13/share/cmake
 
   cp --preserve --recursive "${srcdir}"/spirv/* "${pkgdir}"
 
