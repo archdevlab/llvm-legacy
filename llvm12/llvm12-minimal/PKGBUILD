@@ -167,7 +167,7 @@ package_llvm12-minimal(){
   DESTDIR="${pkgdir}" ninja $NINJAFLAGS install-distribution
 
   # Include lit for running lit-based tests in other projects
-  pushd ../utils/lit
+  pushd "${srcdir}"/llvm-project-llvmorg-"${pkgver}"/llvm/utils/lit
   python3 setup.py install --prefix="${pkgdir}"/opt/llvm12 -O1
   popd
 
