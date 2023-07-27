@@ -293,7 +293,6 @@ package_clang12-libs-minimal(){
   install -d "${pkgdir}"/usr/lib
   ln -s /opt/llvm12/lib/libclang.so.12 "${pkgdir}"/usr/lib/libclang.so.12
   ln -s /opt/llvm12/lib/libclang-cpp.so.12 "${pkgdir}"/usr/lib/libclang-cpp.so.12
-  ln -s /opt/llvm12/lib/libclang.so.12.0.1 "${pkgdir}"/usr/lib/libclang.so.12.0.1
 
   install -Dm644 "${srcdir}"/llvm-project-llvmorg-"${pkgver}"/clang/LICENSE.TXT "${pkgdir}"/usr/share/licenses/"${pkgname}"/clang/LICENSE
   install -Dm644 "${srcdir}"/llvm-project-llvmorg-"${pkgver}"/clang/CODE_OWNERS.TXT "${pkgdir}"/usr/share/licenses/"${pkgname}"/clang/CODE_OWNERS
